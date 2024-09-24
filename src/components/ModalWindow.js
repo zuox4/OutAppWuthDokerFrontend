@@ -1,8 +1,8 @@
 import './ModalWindow.css'
 import {useEffect, useState} from "react";
 
-function ShowModalWindow({isOpen, setModal, fullName, setMessage, sendMessage, setActiveChildCard, setDateOut}) {
-    const [dateTime, setDateTime] = useState(Date.now)
+function ShowModalWindow({isOpen, setModal, fullName, setMessage, sendMessage, setActiveChildCard, setDateOut, className}) {
+    const [dateTime, setDateTime] = useState(Date.now())
     function getLocalFormattedDateTime() {
         const now = new Date();
         const year = now.getFullYear();
@@ -13,20 +13,21 @@ function ShowModalWindow({isOpen, setModal, fullName, setMessage, sendMessage, s
         return `${year}-${month}-${day}T${hours}:${minutes}`;
     }
     useEffect(()=>{
+        console.log(dateTime)
         setDateOut(dateTime)
     }, [dateTime])
     function sendDataToServer() {
-
         sendMessage()
         setModal(false)
         setActiveChildCard(prevCard => ({...prevCard, fullName:''}))
     }
     useEffect(() => {
-        setDateTime(getLocalFormattedDateTime)
+        setDateTime(getLocalFormattedDateTime())
     }, []);
     useEffect(() => {
         // Обновляем локальное сообщение, чтобы избежать бесконечного цикла
-        const newMessage = fullName + ' в ' + dateTime;
+        const newMessage = fullName + ' в ' + dateTime + ' ' + className;
+        console.log(newMessage)
         setMessage(newMessage);
        // Обновляем сообщение только если оно изменилось
         if (setMessage) {

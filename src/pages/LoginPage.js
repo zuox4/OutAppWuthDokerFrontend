@@ -35,7 +35,7 @@ function LoginForm() {
     return (
         <div className="login-container" style={{display:"flex", flexDirection:"column", alignItems:"center"}}>
             <img src={logo1298} className="logo" alt="logo" style={{width:'200px'}}/>
-            <h2>Классный помошник <br/>Школа №1298 </h2>
+            <h2>Классный помощник <br/>Школа №1298 </h2>
             <form onSubmit={handleSubmit}>
                 <div className="input-group">
                     <label htmlFor="email">E-mail:</label>

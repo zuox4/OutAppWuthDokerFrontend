@@ -50,7 +50,7 @@
         display: flex;
         grid-template-columns: 1fr;
         justify-items: center;
-        flex-direction: column-reverse;
+        flex-direction: column;
         align-items: center;
 
     }

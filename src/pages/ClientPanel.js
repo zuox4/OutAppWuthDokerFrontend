@@ -18,23 +18,37 @@ function ClientPanel() {
     const [dataStudents, setDataStudents] = React.useState([]);
     const [className, setClassName] = React.useState('');
     const [isLoading, setIsLoading] = useState(false);
-    const [dateOut, setDateOut] = React.useState(Date.now);
+    const [dateOut, setDateOut] = React.useState(Date.now());
     const { user } = useContext(UserId);
+    function parseDate(dateString) {
+        // Проверяем, заканчивается ли строка буквой 'Z'
+        if (dateString.endsWith('Z')) {
+            dateString = dateString.slice(0, -1); // Убираем 'Z'
+        }
+
+        // Разбиваем строку на дату и время
+        const [datePart, timePart] = dateString.split('T');
+        const [year, month, day] = datePart.split('-').map(Number);
+        const [hours, minutes] = timePart.split(':').map(Number);
+
+        // Создаём объект Date, учитывая UTC
+        const date = new Date(Date.UTC(year, month - 1, day, hours, minutes));
+        return date;
+    }
     const sendMessage = () => {
         // Отправляем сообщение на сервер
         socket.emit('client-message', message);
-        console.log(message);
-        fix(user.id, dateOut).then(r => alert('Пропуск успешно оформлен')).catch(e => alert('Произошла ошибка'));
+
+        fix(user.id, parseDate(dateOut)).then(r => alert('Пропуск успешно оформлен')).catch(e => alert('Произошла ошибка'));
+        console.log(parseDate(dateOut))
         setMessage('');
     };
 
         const fix = async (teacherId, date_out) => {
             const studentId = activeChildCardName.id;
-            const date1 = new Date(dateOut)
-            const isoDateStr = date1.toISOString();
             try {
 
-                const response = await axios.post(`http://91.77.160.177:4001/fix_out`, { mentor_id:teacherId, student_id:studentId, date_out:isoDateStr});
+                const response = await axios.post(`http://91.77.160.177:4001/fix_out`, { mentor_id:teacherId, student_id:studentId, date_out:date_out});
                 console.log(response.data)
                 return response.data;
             }catch (er){
@@ -93,7 +107,7 @@ function ClientPanel() {
         !isLoading&&<div className="main-page">
             <Header classGrad={className} nameApp={'Классный помощник'}/>
             {<ListChildCard dataStudents={dataStudents} setModal={setModal} setActiveChildCard={setActiveChildCard} activeChildCardName={activeChildCardName} />}
-            <ModalWindow setDateOut={setDateOut} sendMessage={sendMessage} setMessage={setMessage} isOpen={modal} setModal={setModal} setActiveChildCard={setActiveChildCard} fullName={activeChildCardName.fullName} id={activeChildCardName.id}  />
+            <ModalWindow setDateOut={setDateOut} sendMessage={sendMessage} setMessage={setMessage} isOpen={modal} setModal={setModal} setActiveChildCard={setActiveChildCard} className={className} fullName={activeChildCardName.fullName} id={activeChildCardName.id}  />
             <Footer/>
         </div>
     )
