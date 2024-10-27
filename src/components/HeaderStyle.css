@@ -3,6 +3,7 @@
     background-color: rgba(0, 20, 78, 0);
     display: grid;
     grid-template-columns:1fr 6fr 2fr;
+
     height: 50px;
     padding-top: 5px;
     border-bottom: 1px solid white;

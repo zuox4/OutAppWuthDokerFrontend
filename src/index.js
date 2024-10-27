@@ -1,20 +1,15 @@
-import React, {createContext, useState} from 'react';
+import React from 'react';
 
 import './index.css';
-
 import reportWebVitals from './reportWebVitals';
 import * as ReactDOM from "react-dom/client";
-
-import { register } from './serviceWorkerRegistration'; // Добавьте эту строку
 import App from "./App";
-
+import axios from "axios";
+import {api_url} from "./api";
+axios.defaults.baseURL = api_url
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <App/>
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
 

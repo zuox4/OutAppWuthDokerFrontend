@@ -12,7 +12,7 @@ function Registration() {
     async function registerUser(email) {
         setLoading(true)
         try {
-            const response = await axios.post('http://91.77.160.177:4001/register', {
+            const response = await axios.post('/register', {
                 email:email
             });
             console.log('Успешная регистрация:', response.data);

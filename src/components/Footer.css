@@ -5,7 +5,7 @@
     height: 70px;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
-    background-color: rgba(0, 20, 78, 0.46);
+    background-color: rgba(43, 65, 136, 0.91);
     width: 100%;
     color: white;
 }

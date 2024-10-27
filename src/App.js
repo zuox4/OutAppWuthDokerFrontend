@@ -1,35 +1,52 @@
 // src/App.js
 import React, { createContext, useState } from "react";
 import './App.css';
-import Header from "./components/Header";
 import ClientPanel from "./pages/ClientPanel";
 import AdminPanel from "./pages/AdminPanel";
-import LoginPage from "./pages/LoginPage";
 import Registration from "./pages/Registration";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import ProtectedRoute from "./components/ProtectedRoute";
+import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import LoginForm from "./pages/LoginPage";
 import {useEffect} from "react";
+import Root from "./components/Root";
 
+import History from "./components/History";
+if ('ontouchstart' in window) {
+    document.body.style = '0';
+}
 const router = createBrowserRouter([
     { path: "/", element: <LoginForm/> },
     { path: "/register", element: <Registration /> },
     {
         path: "/admin",
         element: (
-
                 <AdminPanel />
-
-        )
+        ),
+        children:[
+            {
+                path: ":schoolId",
+                element: <AdminPanel />
+            }
+        ]
     },
     {
         path: "/client",
         element: (
-            <ProtectedRoute>
-                <ClientPanel />
-            </ProtectedRoute>
-        )
-    },
+                <div>
+                    <Root/>
+                </div>
+        ),
+        children:[{
+            path: '',
+            element: <ClientPanel/>
+            },
+            {
+                path:'history',
+                element: <History/>
+            },
+]
+
+
+    }
 ]);
 
 export const UserId = createContext({});

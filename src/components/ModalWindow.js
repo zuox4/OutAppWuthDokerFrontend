@@ -13,7 +13,6 @@ function ShowModalWindow({isOpen, setModal, fullName, setMessage, sendMessage, s
         return `${year}-${month}-${day}T${hours}:${minutes}`;
     }
     useEffect(()=>{
-        console.log(dateTime)
         setDateOut(dateTime)
     }, [dateTime])
     function sendDataToServer() {
@@ -27,7 +26,6 @@ function ShowModalWindow({isOpen, setModal, fullName, setMessage, sendMessage, s
     useEffect(() => {
         // Обновляем локальное сообщение, чтобы избежать бесконечного цикла
         const newMessage = fullName + ' в ' + dateTime + ' ' + className;
-        console.log(newMessage)
         setMessage(newMessage);
        // Обновляем сообщение только если оно изменилось
         if (setMessage) {
